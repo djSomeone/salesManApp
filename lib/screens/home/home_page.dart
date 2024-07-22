@@ -5,10 +5,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:tachnic_pharma_equipments/screens/home_pages/home_page1/home_page1.dart';
-import 'package:tachnic_pharma_equipments/screens/home_pages/home_page2/note_page.dart';
-import 'package:tachnic_pharma_equipments/screens/share_with_admin_page/share_with_admin_page.dart';
+import 'package:tachnic_pharma_equipments/screens/home/home_pages/home_page1/home_page1.dart';
+import 'package:tachnic_pharma_equipments/screens/home/home_pages/home_page2/note_page.dart';
 import 'package:tachnic_pharma_equipments/utility/constants.dart';
+
+import '../camera_section/share_with_admin_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});

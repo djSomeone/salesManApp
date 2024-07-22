@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tachnic_pharma_equipments/module/customTextFeild.dart';
+import 'package:tachnic_pharma_equipments/screens/forget_password/forget_password_page.dart';
 import 'package:tachnic_pharma_equipments/screens/login_register/login/controller.dart';
 import 'package:tachnic_pharma_equipments/screens/login_register/register/register_screen.dart';
 
@@ -82,7 +83,8 @@ class LoginPage extends StatelessWidget {
                         ),
                         GestureDetector(
                           onTap: (){
-                            standaredToast("forget password");
+                            Print.p("forgetPassword");
+                            Get.to(ForgetPasswordPage());
                           },
                           child: Container(
                             child: Text("Forgot your password?",

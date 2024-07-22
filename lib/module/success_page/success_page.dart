@@ -1,5 +1,8 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tachnic_pharma_equipments/utility/constants.dart';
 
@@ -7,7 +10,15 @@ class SuccessPage extends StatelessWidget {
   var title;
   var subtitle;
   var onPress;
-  SuccessPage({required this.title, required this.onPress,this.subtitle = ""});
+  bool autoNavigate;
+  var nextPage;
+  SuccessPage({required this.title, required this.onPress,this.subtitle = "",this.autoNavigate=false, this.nextPage=""}){
+    if(autoNavigate){
+      Timer(Duration(seconds: 2), () {
+        Get.to(nextPage);
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +62,7 @@ class SuccessPage extends StatelessWidget {
                     ],
                   ),
                 )),
-            Expanded(
+            autoNavigate?Expanded(flex:3,child: SizedBox()):Expanded(
                 flex: 3,
                 child: Center(
                   child: Column(
