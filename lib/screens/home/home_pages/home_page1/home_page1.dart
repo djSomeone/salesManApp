@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:tachnic_pharma_equipments/screens/login_register/login/login_page.dart';
 import 'package:tachnic_pharma_equipments/utility/constants.dart';
 
 import 'module/customTile.dart';
@@ -73,7 +74,7 @@ class HomePage1 extends StatelessWidget {
               ),
             ),
             // main Section
-            Expanded(child: dataListUi()),
+            Expanded(child: emptyDataUi()),
           ],
         ),
       ),
@@ -125,7 +126,8 @@ class HomePage1 extends StatelessWidget {
               },
               onTapSecoundButton: () {
                 standaredToast("Logout");
-                Get.back();
+
+                Get.offAll(LoginPage());
               },
               textFirstButton: "No",
               textSecoundButton: "Yes");

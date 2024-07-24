@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:tachnic_pharma_equipments/api/api.dart';
 import 'package:tachnic_pharma_equipments/module/customTextFeild.dart';
 import 'package:tachnic_pharma_equipments/screens/forget_password/forget_password_page.dart';
+import 'package:tachnic_pharma_equipments/screens/home/home_page.dart';
 import 'package:tachnic_pharma_equipments/screens/login_register/login/controller.dart';
 import 'package:tachnic_pharma_equipments/screens/login_register/register/register_screen.dart';
 
@@ -108,7 +110,7 @@ class LoginPage extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  standaredButton(onPress: () {}, title: "Login", height: 50),
+                  standaredButton(onPress: onLogin, title: "Login", height: 50),
                   SizedBox(
                     height: 20,
                   ),
@@ -158,5 +160,17 @@ class LoginPage extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  void onLogin()
+  async
+  {
+    Print.p("in inLoging");
+  //   test
+  //   Get.offAll(HomePage());
+    await Api.login("user@example.com", "password123");
+
+
+
   }
 }

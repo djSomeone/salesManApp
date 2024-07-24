@@ -55,7 +55,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
           // mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Expanded(
-              flex: 8,
+              flex: 10,
               child: Center(
                 child: SingleChildScrollView(
                   child: Column(
@@ -143,32 +143,35 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           placeHolder: "Confirm Password",
                           controller: confCon,
                           keyword: "confirm"),
-                      Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Obx(
-                            () => Checkbox(
-                                shape: RoundedRectangleBorder(
-                                  side: BorderSide(
-                                    color: Colors.red, // Set the border color
-                                    width: 2.0, // Set the border width
-                                  ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 10),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Obx(
+                              () => Checkbox(
+                                  shape: RoundedRectangleBorder(
+                                    side: BorderSide(
+                                      color: Colors.red, // Set the border color
+                                      width: 2.0, // Set the border width
+                                    ),
 
-                                  borderRadius: BorderRadius.circular(
-                                      5.0), // Set the corner radius
-                                ),
-                                value: controller.isCheckedPrivacy.value,
-                                onChanged: (newValue) {
-                                  controller.setPrivacyPolicy(newValue!);
-                                }),
-                          ),
-                          Expanded(
-                              child: Text(
-                            "By continuing you accept our Privacy Policy and Term of Use",
-                            style:
-                                GoogleFonts.poppins(color: Color(0xFF747474)),
-                          ))
-                        ],
+                                    borderRadius: BorderRadius.circular(
+                                        5.0), // Set the corner radius
+                                  ),
+                                  value: controller.isCheckedPrivacy.value,
+                                  onChanged: (newValue) {
+                                    controller.setPrivacyPolicy(newValue!);
+                                  }),
+                            ),
+                            Expanded(
+                                child: Text(
+                              "By continuing you accept our Privacy Policy and Term of Use",
+                              style:
+                                  GoogleFonts.poppins(color: Color(0xFF747474)),
+                            ))
+                          ],
+                        ),
                       )
 
                       // Row(children: [
@@ -188,7 +191,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 children: [
                   standaredButton(
                       onPress: () {
-                        Get.off(SuccessPage(
+                        Get.offAll(SuccessPage(
                           title: "Registration Completed",
                           subtitle:
                               "Registration details have been sent to admin.Please come back later.",

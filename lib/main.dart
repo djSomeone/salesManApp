@@ -5,8 +5,11 @@ import 'package:flutter_statusbarcolor_ns/flutter_statusbarcolor_ns.dart';
 // import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 import 'package:tachnic_pharma_equipments/screens/login_register/login/login_page.dart';
 import 'package:tachnic_pharma_equipments/utility/constants.dart';
+
+import 'api/api.dart';
 
 void main() async{
 
@@ -22,6 +25,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    Api.dio.interceptors.add(PrettyDioLogger());
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
@@ -101,7 +105,7 @@ class _WellcomePageState extends State<WellcomePage> {
     ),);
   }
   void onPress()async{
-    Get.to(LoginPage());
+    Get.off(LoginPage());
     // Print.p("click");
     // standaredToast("clicked");
 
