@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:tachnic_pharma_equipments/module/customTextFeild.dart';
 import 'package:tachnic_pharma_equipments/module/success_page/success_page.dart';
 import 'package:tachnic_pharma_equipments/screens/home/home_page.dart';
+import 'package:tachnic_pharma_equipments/screens/login_register/approval_screen.dart';
 import 'package:tachnic_pharma_equipments/screens/login_register/login/controller.dart';
 import 'package:tachnic_pharma_equipments/utility/constants.dart';
 
@@ -191,14 +192,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 children: [
                   standaredButton(
                       onPress: () {
-                        Get.offAll(SuccessPage(
-                          title: "Registration Completed",
-                          subtitle:
-                              "Registration details have been sent to admin.Please come back later.",
-                          onPress: (){
-                            Get.offAll(HomePage());
-                          },
-                        ));
+                        Get.to(Approval_Screen());
+                        // Get.offAll(SuccessPage(
+                        //   title: "Registration Completed",
+                        //   subtitle:
+                        //       "Registration details have been sent to admin.Please come back later.",
+                        //   onPress: (){
+                        //     Get.offAll(HomePage());
+                        //   },
+                        // ));
                       },
                       title: "Register",
                       height: 50),

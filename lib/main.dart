@@ -106,8 +106,5 @@ class _WellcomePageState extends State<WellcomePage> {
   }
   void onPress()async{
     Get.off(LoginPage());
-    // Print.p("click");
-    // standaredToast("clicked");
-
   }
 }

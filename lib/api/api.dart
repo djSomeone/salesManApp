@@ -9,17 +9,23 @@ class Api{
 
   static String loginEndPoint="user/login";
 
-  static Future<Map<String, dynamic>> login(String email,String password)
-  async{
-    var finalPath;
-    finalPath = "$endPoint$loginEndPoint";
-    Print.p(finalPath);
-    var data={
-      "email":email.toString(),
-      "password": password.toString()
-    };
-    Response res = await dio.post(finalPath, data: data);
-    return ResponseStructure.toResponseStructure(res);
+  static Future<Map<String, dynamic>?> login(
+      {required String email, required String password})
+  async
+  {
+    try{
+      var finalPath;
+      finalPath = "$endPoint$loginEndPoint";
+      Print.p(finalPath);
+      var data = {"email": email.toString(), "password": password.toString()};
+      Response res = await dio.post(finalPath, data: data);
+      return ResponseStructure.toResponseStructure(res);
+    }
+    catch(e){
+      Print.p("Some thing went wrong in login");
+      Print.p("Exception:${e.toString()}");
+    }
+
   }
 
 

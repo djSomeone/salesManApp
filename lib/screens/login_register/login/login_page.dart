@@ -31,82 +31,82 @@ class LoginPage extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Expanded(flex:3,child: Center(
-              child: SingleChildScrollView(
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    SizedBox(
-                      height: 20,
-                    ),
-                    Column(
+            Expanded(
+                flex: 3,
+                child: Center(
+                  child: SingleChildScrollView(
+                    child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         SizedBox(
-                          height: 30,
-                        ),
-                        Text(
-                          "Hello there,",
-                          style: subHeaderStyle,
-                        ),
-                        SizedBox(
-                          height: 8,
-                        ),
-                        Text(
-                          "Welcome Back",
-                          style: headerStyle,
-                        ),
-                        SizedBox(
-                          height: 26,
-                        ),
-                        CustomTextFeield(
-                            icon: Icon(
-                              Icons.email_outlined,
-                              size: 16,
-                            ),
-
-                            placeHolder: "Email",
-                            controller: emailCon,
-                            keyword: "email"),
-                        SizedBox(
                           height: 20,
                         ),
-                        CustomTextFeield(
-                            icon: Icon(
-                              Icons.lock_outline,
-                              size: 16,
+                        Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            SizedBox(
+                              height: 30,
                             ),
-
-                            placeHolder: "Password",
-                            controller: passCon,
-                            keyword: "password"),
-                        SizedBox(
-                          height: 24,
+                            Text(
+                              "Hello there,",
+                              style: subHeaderStyle,
+                            ),
+                            SizedBox(
+                              height: 8,
+                            ),
+                            Text(
+                              "Welcome Back",
+                              style: headerStyle,
+                            ),
+                            SizedBox(
+                              height: 26,
+                            ),
+                            CustomTextFeield(
+                                icon: Icon(
+                                  Icons.email_outlined,
+                                  size: 16,
+                                ),
+                                placeHolder: "Email",
+                                controller: emailCon,
+                                keyword: "email"),
+                            SizedBox(
+                              height: 20,
+                            ),
+                            CustomTextFeield(
+                                icon: Icon(
+                                  Icons.lock_outline,
+                                  size: 16,
+                                ),
+                                placeHolder: "Password",
+                                controller: passCon,
+                                keyword: "password"),
+                            SizedBox(
+                              height: 24,
+                            ),
+                            GestureDetector(
+                              onTap: () {
+                                Print.p("forgetPassword");
+                                Get.to(ForgetPasswordPage());
+                              },
+                              child: Container(
+                                child: Text("Forgot your password?",
+                                    style: GoogleFonts.poppins(
+                                      decoration: TextDecoration.underline,
+                                      color: Color(0xFF747474),
+                                    )),
+                              ),
+                            )
+                          ],
                         ),
-                        GestureDetector(
-                          onTap: (){
-                            Print.p("forgetPassword");
-                            Get.to(ForgetPasswordPage());
-                          },
-                          child: Container(
-                            child: Text("Forgot your password?",
-                                style: GoogleFonts.poppins(
-                                  decoration: TextDecoration.underline,
-                                  color: Color(0xFF747474),
-                                )),
-                          ),
-                        )
+                        SizedBox(
+                          height: 100,
+                        ),
                       ],
                     ),
-                    SizedBox(
-                      height: 100,
-                    ),
-                  ],
-                ),
-              ),
-            )),
+                  ),
+                )),
             Expanded(
-              flex:2,
+              flex: 2,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
@@ -116,7 +116,8 @@ class LoginPage extends StatelessWidget {
                   ),
                   Row(
                     children: [
-                      Expanded(child: Padding(
+                      Expanded(
+                          child: Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 6),
                         child: Divider(),
                       )),
@@ -124,7 +125,8 @@ class LoginPage extends StatelessWidget {
                         padding: const EdgeInsets.symmetric(horizontal: 10),
                         child: Text("Or"),
                       ),
-                      Expanded(child: Padding(
+                      Expanded(
+                          child: Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 6),
                         child: Divider(),
                       ))
@@ -140,7 +142,9 @@ class LoginPage extends StatelessWidget {
                         "Don’t have an account yet?",
                         style: GoogleFonts.poppins(fontSize: 14),
                       ),
-                      SizedBox(width: 10,),
+                      SizedBox(
+                        width: 10,
+                      ),
                       GestureDetector(
                           onTap: () {
                             standaredToast("clicked");
@@ -150,7 +154,9 @@ class LoginPage extends StatelessWidget {
                               child: Text("Register",
                                   style: GoogleFonts.poppins(
                                       color: Colors.blue)))),
-                      SizedBox(height: 40,)
+                      SizedBox(
+                        height: 40,
+                      )
                     ],
                   )
                 ],
@@ -162,15 +168,26 @@ class LoginPage extends StatelessWidget {
     );
   }
 
-  void onLogin()
-  async
-  {
+  void onLogin() async {
     Print.p("in inLoging");
-  //   test
-  //   Get.offAll(HomePage());
-    await Api.login("user@example.com", "password123");
+    var email = controller.data.value["email"];
+    var pass = controller.data.value["password"];
+    var response;
+    // if there is data
+    if (email != null && pass != null) {
+      Print.p("call api");
+       response = await Api.login(email: email,password: pass);
+       Print.p(response);
+      // Print.p(email.toString());
+      // Print.p(pass.toString());
+    }
+    else
+    {
+      Print.p("there is some issuse in data");
+      standaredToast("Please fill all feiled ");
+    }
 
-
-
+    // var response = await Api.login("user@example.com", "password123");
+    // if (response != null) {}
   }
 }
