@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tachnic_pharma_equipments/module/customTextFeild.dart';
+import 'package:tachnic_pharma_equipments/module/standaredButton/standaredButton.dart';
 import 'package:tachnic_pharma_equipments/module/success_page/success_page.dart';
 import 'package:tachnic_pharma_equipments/screens/forget_password/controller/controller.dart';
 import 'package:tachnic_pharma_equipments/screens/forget_password/enter_code_page.dart';
@@ -37,7 +38,7 @@ class ForgetPasswordPage extends StatelessWidget {
                   SizedBox(height:30,),
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 30),
-                    child: standaredButton(onPress: (){
+                    child: StandaredButton(onPress: (){
                       Get.to(SuccessPage(title: "Succeess", subtitle:"A code has been sent to your Email for verification",onPress: (){},autoNavigate: true,nextPage: EnterCodePage(),));
                     }, title: "Continue"),
                   ),

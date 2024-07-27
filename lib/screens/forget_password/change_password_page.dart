@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:tachnic_pharma_equipments/module/standaredButton/standaredButton.dart';
 
 import '../../module/success_page/success_page.dart';
 import '../../utility/constants.dart';
@@ -94,7 +95,7 @@ class ChangePasswordPage extends StatelessWidget {
                   // button
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 50),
-                    child: standaredButton(
+                    child: StandaredButton(
                         onPress: () {
                           Get.to(SuccessPage(title: "Succeess", subtitle:"Your Password has been changed successfully.",onPress: (){},autoNavigate: true,nextPage: EnterCodePage(),));
                         },

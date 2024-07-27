@@ -10,6 +10,7 @@ import 'package:tachnic_pharma_equipments/screens/login_register/login/login_pag
 import 'package:tachnic_pharma_equipments/utility/constants.dart';
 
 import 'api/api.dart';
+import 'module/standaredButton/standaredButton.dart';
 
 void main() async{
 
@@ -25,7 +26,24 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    Api.dio.interceptors.add(PrettyDioLogger());
+    Api.dio.interceptors.add(PrettyDioLogger(
+        requestHeader: true,
+        requestBody: true,
+        responseBody: true,
+        responseHeader: false,
+        error: true,
+        compact: true,
+        maxWidth: 90,
+        // filter: (options, args){
+        //   // don't print requests with uris containing '/posts'
+        //   if(options.path.contains('/posts')){
+        //     return false;
+        //   }
+        //   // don't print responses with unit8 list data
+        //   return !args.isResponse || !args.hasUint8ListData;
+        // }
+    )
+    );;
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
@@ -96,7 +114,7 @@ class _WellcomePageState extends State<WellcomePage> {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                standaredButton(onPress: onPress, title: "Let’s Get Started"),
+                StandaredButton(onPress: onPress, title: "Let’s Get Started"),
               ],
             ),
           )),

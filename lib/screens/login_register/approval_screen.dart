@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:tachnic_pharma_equipments/module/standaredButton/standaredButton.dart';
 import 'package:tachnic_pharma_equipments/module/success_page/success_page.dart';
 import 'package:tachnic_pharma_equipments/screens/home/home_page.dart';
 import 'package:tachnic_pharma_equipments/utility/constants.dart';
@@ -36,7 +37,7 @@ class Approval_Screen extends StatelessWidget {
             )),
             Expanded(flex:2,child: Column(
               children: [
-                standaredButton(onPress: (){
+                StandaredButton(onPress: (){
                   Get.offAll(SuccessPage(
                     title: "Registration Completed",
                     subtitle:

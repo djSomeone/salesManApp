@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tachnic_pharma_equipments/api/api.dart';
 import 'package:tachnic_pharma_equipments/module/customTextFeild.dart';
+import 'package:tachnic_pharma_equipments/module/standaredButton/standaredButton.dart';
 import 'package:tachnic_pharma_equipments/screens/forget_password/forget_password_page.dart';
 import 'package:tachnic_pharma_equipments/screens/home/home_page.dart';
 import 'package:tachnic_pharma_equipments/screens/login_register/login/controller.dart';
@@ -18,6 +19,7 @@ class LoginPage extends StatelessWidget {
   var headerStyle =
       GoogleFonts.poppins(fontSize: 20, fontWeight: FontWeight.w700);
   var controller = Get.put(LoginFormController());
+
   var emailCon = TextEditingController();
   var passCon = TextEditingController();
 
@@ -67,6 +69,8 @@ class LoginPage extends StatelessWidget {
                                   size: 16,
                                 ),
                                 placeHolder: "Email",
+                                keyBoardType: TextInputType.emailAddress,
+                                maxlength: 20,
                                 controller: emailCon,
                                 keyword: "email"),
                             SizedBox(
@@ -79,6 +83,8 @@ class LoginPage extends StatelessWidget {
                                 ),
                                 placeHolder: "Password",
                                 controller: passCon,
+                                maxlength: 8,
+                                keyBoardType: TextInputType.visiblePassword,
                                 keyword: "password"),
                             SizedBox(
                               height: 24,
@@ -110,7 +116,7 @@ class LoginPage extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  standaredButton(onPress: onLogin, title: "Login", height: 50),
+                  StandaredButton(onPress: onLogin, title: "Login", height: 50),
                   SizedBox(
                     height: 20,
                   ),
@@ -147,7 +153,7 @@ class LoginPage extends StatelessWidget {
                       ),
                       GestureDetector(
                           onTap: () {
-                            standaredToast("clicked");
+                            standaredToast(msg: "clicked");
                             Get.to(RegisterScreen());
                           },
                           child: Container(
@@ -177,14 +183,23 @@ class LoginPage extends StatelessWidget {
     if (email != null && pass != null) {
       Print.p("call api");
        response = await Api.login(email: email,password: pass);
-       Print.p(response);
+       Print.p("after api method");
+       if(response!=null)
+         {
+           Print.p(response.toString());
+         }
+       else{
+         Print.p("response=>null");
+       }
+       // Print.p(response);
+       // if()
       // Print.p(email.toString());
       // Print.p(pass.toString());
     }
     else
     {
       Print.p("there is some issuse in data");
-      standaredToast("Please fill all feiled ");
+      standaredToast(msg: "Please fill all feiled ");
     }
 
     // var response = await Api.login("user@example.com", "password123");

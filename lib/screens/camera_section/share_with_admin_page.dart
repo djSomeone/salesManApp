@@ -6,6 +6,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:tachnic_pharma_equipments/module/success_page/success_page.dart';
 import 'package:tachnic_pharma_equipments/utility/constants.dart';
 
+import '../../module/standaredButton/standaredButton.dart';
+
 class ShareWithAdminPage extends StatelessWidget {
   String path;
   var context;
@@ -93,7 +95,7 @@ class ShareWithAdminPage extends StatelessWidget {
               Expanded(
                   flex: 2,
                   child: Center(
-                    child: standaredButton(
+                    child: StandaredButton(
                         onPress: onShare,
                         title: "Share with Admin"),
                   ))

@@ -6,6 +6,8 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tachnic_pharma_equipments/utility/constants.dart';
 
+import '../standaredButton/standaredButton.dart';
+
 class SuccessPage extends StatelessWidget {
   var title;
   var subtitle;
@@ -68,7 +70,7 @@ class SuccessPage extends StatelessWidget {
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      standaredButton(onPress: onPress, title: "Continue")
+                      StandaredButton(onPress: onPress, title: "Continue")
                     ],
                   ),
                 )),

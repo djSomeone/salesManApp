@@ -113,7 +113,7 @@ class CustomTextFeield extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Radio<String>(
-                  value: 'male',
+                  value: 'Male',
                   groupValue: formController.gender.value,
                   onChanged: (value) {
                     formController.setGender(value!);
@@ -124,7 +124,7 @@ class CustomTextFeield extends StatelessWidget {
                 Text('Male',style: GoogleFonts.poppins(fontSize: 18),),
                 SizedBox(width: 10.0), // Add spacing between elements
                 Radio<String>(
-                  value: 'female',
+                  value: 'Female',
                   groupValue: formController.gender.value,
                   onChanged: (value) {
                   formController.setGender(value!);

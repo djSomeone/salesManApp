@@ -125,7 +125,7 @@ class HomePage1 extends StatelessWidget {
                 Get.back();
               },
               onTapSecoundButton: () {
-                standaredToast("Logout");
+                standaredToast(msg: "Logout");
 
                 Get.offAll(LoginPage());
               },

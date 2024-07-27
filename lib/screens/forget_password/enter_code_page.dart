@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:otp_pin_field/otp_pin_field.dart';
 import 'package:tachnic_pharma_equipments/module/customTextFeild.dart';
+import 'package:tachnic_pharma_equipments/module/standaredButton/standaredButton.dart';
 import 'package:tachnic_pharma_equipments/module/success_page/success_page.dart';
 import 'package:tachnic_pharma_equipments/screens/forget_password/change_password_page.dart';
 import 'package:tachnic_pharma_equipments/screens/forget_password/controller/controller.dart';
@@ -140,7 +141,7 @@ class EnterCodePage extends StatelessWidget {
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 30),
-                    child: standaredButton(
+                    child: StandaredButton(
                         onPress: () {
                           Get.to(ChangePasswordPage());
                         },

@@ -6,7 +6,7 @@ import 'package:tachnic_pharma_equipments/utility/constants.dart';
 class LoginFormController extends GetxController
 {
   RxMap data=RxMap({"gender": "male"});
-  RxString gender="male".obs;
+  RxString gender="Male".obs;
   RxString dob="YY/MM/DD".obs;
   RxBool isCheckedPrivacy=false.obs;
 
@@ -41,6 +41,8 @@ class LoginFormController extends GetxController
     Print.p(data.value.toString());
   }
   void setPrivacyPolicy(bool x){
+
     isCheckedPrivacy.value=x;
+    // Print.p(isCheckedPrivacy.value.toString());
   }
 }
