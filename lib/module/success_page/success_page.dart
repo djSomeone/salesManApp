@@ -14,10 +14,11 @@ class SuccessPage extends StatelessWidget {
   var onPress;
   bool autoNavigate;
   var nextPage;
-  SuccessPage({required this.title, required this.onPress,this.subtitle = "",this.autoNavigate=false, this.nextPage=""}){
+  bool goBack;
+  SuccessPage({required this.title, required this.onPress,this.subtitle = "",this.autoNavigate=false, this.nextPage="",this.goBack=false}){
     if(autoNavigate){
       Timer(Duration(seconds: 2), () {
-        Get.to(nextPage);
+        goBack?Get.back():Get.off(nextPage);
       });
     }
   }

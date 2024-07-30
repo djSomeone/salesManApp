@@ -6,6 +6,7 @@ import 'package:tachnic_pharma_equipments/module/customTextFeild.dart';
 import 'package:tachnic_pharma_equipments/module/standaredButton/standaredButton.dart';
 import 'package:tachnic_pharma_equipments/screens/forget_password/forget_password_page.dart';
 import 'package:tachnic_pharma_equipments/screens/home/home_page.dart';
+import 'package:tachnic_pharma_equipments/screens/login_register/approval_screen.dart';
 import 'package:tachnic_pharma_equipments/screens/login_register/login/controller.dart';
 import 'package:tachnic_pharma_equipments/screens/login_register/register/register_screen.dart';
 
@@ -70,7 +71,7 @@ class LoginPage extends StatelessWidget {
                                 ),
                                 placeHolder: "Email",
                                 keyBoardType: TextInputType.emailAddress,
-                                maxlength: 20,
+                                maxlength: 40,
                                 controller: emailCon,
                                 keyword: "email"),
                             SizedBox(
@@ -83,7 +84,7 @@ class LoginPage extends StatelessWidget {
                                 ),
                                 placeHolder: "Password",
                                 controller: passCon,
-                                maxlength: 8,
+                                maxlength: 20,
                                 keyBoardType: TextInputType.visiblePassword,
                                 keyword: "password"),
                             SizedBox(
@@ -175,29 +176,37 @@ class LoginPage extends StatelessWidget {
   }
 
   void onLogin() async {
-    Print.p("in inLoging");
+    // Print.p("in inLoging");
     var email = controller.data.value["email"];
     var pass = controller.data.value["password"];
     var response;
     // if there is data
     if (email != null && pass != null) {
-      Print.p("call api");
-       response = await Api.login(email: email,password: pass);
-       Print.p("after api method");
-       if(response!=null)
-         {
-           Print.p(response.toString());
-         }
-       else{
-         Print.p("response=>null");
-       }
-       // Print.p(response);
-       // if()
+      // Print.p("call api");
+      response = await Api.login(email: email, password: pass);
+      // Print.p("after api method");
+      if (response != null) {
+        // Print.p(response.toString());
+
+        var result = await localizeUserData(response["body"]);
+        if (result) {
+          if (response["body"]["isAdminApproved"]) {
+            Get.offAll(HomePage());
+          } else {
+            Get.offAll(Approval_Screen());
+          }
+        } else {
+          standaredToast(msg: "localize data where failed");
+        }
+        // Print.p(result.toString());
+      } else {
+        standaredToast(msg: "Invalid cradentials");
+      }
+      // Print.p(response);
+      // if()
       // Print.p(email.toString());
       // Print.p(pass.toString());
-    }
-    else
-    {
+    } else {
       Print.p("there is some issuse in data");
       standaredToast(msg: "Please fill all feiled ");
     }

@@ -10,20 +10,25 @@ import 'package:tachnic_pharma_equipments/screens/home/home_pages/home_page2/not
 import 'package:tachnic_pharma_equipments/utility/constants.dart';
 
 import '../camera_section/share_with_admin_page.dart';
+import 'home_pages/home_page1/controller/user_controller.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+   HomePage({super.key});
+
 
   @override
   State<HomePage> createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
+
   var currentPageIndex = 0;
   List<Widget> x=[
     HomePage1(),
     NotePage()
   ];
+  @override
+
   @override
   Widget build(BuildContext context) {
     final ThemeData theme = Theme.of(context);

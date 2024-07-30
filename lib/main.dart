@@ -1,23 +1,47 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_statusbarcolor_ns/flutter_statusbarcolor_ns.dart';
-// import 'package:fluttertoast/fluttertoast.dart';
+
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:hive/hive.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
+import 'package:tachnic_pharma_equipments/screens/home/home_page.dart';
+import 'package:tachnic_pharma_equipments/screens/login_register/approval_screen.dart';
 import 'package:tachnic_pharma_equipments/screens/login_register/login/login_page.dart';
 import 'package:tachnic_pharma_equipments/utility/constants.dart';
+import 'package:tachnic_pharma_equipments/utility/wrap_over_hive.dart';
 
 import 'api/api.dart';
 import 'module/standaredButton/standaredButton.dart';
-
+// this is for the initial cheeckes
+bool isUserAlreadyLogin=false;
+bool isApproved=false;
 void main() async{
 
   WidgetsFlutterBinding.ensureInitialized();
 
+  await Hive.initFlutter();
+  var result=await WrapOverHive.getUserData("userData");
+  if(result!=null){
+    isUserAlreadyLogin=true;
+    if(result["isAdminApproved"]){
+      isApproved=true;
+    }
+  }
+  Api.dio.interceptors.add(PrettyDioLogger(
+    requestHeader: true,
+    requestBody: true,
+    responseBody: true,
+    responseHeader: false,
+    error: true,
+    compact: true,
+    maxWidth: 90,
+  )
+  );
 
-  runApp(const MyApp());
+ runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -26,24 +50,8 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    Api.dio.interceptors.add(PrettyDioLogger(
-        requestHeader: true,
-        requestBody: true,
-        responseBody: true,
-        responseHeader: false,
-        error: true,
-        compact: true,
-        maxWidth: 90,
-        // filter: (options, args){
-        //   // don't print requests with uris containing '/posts'
-        //   if(options.path.contains('/posts')){
-        //     return false;
-        //   }
-        //   // don't print responses with unit8 list data
-        //   return !args.isResponse || !args.hasUint8ListData;
-        // }
-    )
-    );;
+
+
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
@@ -51,7 +59,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home:  WellcomePage(),
+      home:  isUserAlreadyLogin?(isApproved?HomePage():Approval_Screen()):WellcomePage(),
     );
   }
 }

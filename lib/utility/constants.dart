@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:tachnic_pharma_equipments/utility/wrap_over_hive.dart';
 // import 'package:tachnic_pharma_equipments/utility/standaredButton/controller/button_controller.dart';
 
 
@@ -83,8 +85,36 @@ Widget standaredAlertBox(
   );
 }
 
-// bool localizeUserData()
-// {
-//
-// }
+Future<bool> localizeUserData(Map<dynamic,dynamic> data)
+async{
+  try{
+
+    WrapOverHive.setUserData("userData", data);
+    Print.p("Successfully addeed  data into box");
+    var get_data=await WrapOverHive.getUserData("userData");
+    Print.p("After geting data");
+    Print.p("type of data=>${get_data.runtimeType.toString()}");
+    Print.p(" data=>${get_data.toString()}");
+    return true;
+  }
+  catch(x){
+    Print.p("Exception in  Localzation of Data=>${x.toString()}");
+    return false;
+  }
+
+}
+
+Future<bool> logOut()async{
+  try{
+    var result=await WrapOverHive.clearUserData();
+    if(result)
+      {
+        return true;
+      }
+    return false;
+  }catch(e){
+    Print.p("Eception while logout method call");
+    return false;
+  }
+}
 

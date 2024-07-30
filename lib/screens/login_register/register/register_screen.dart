@@ -275,10 +275,22 @@ class _RegisterScreenState extends State<RegisterScreen> {
               dob: data["dob"],
               email: data["email"]);
           // if any exception
-          if(response==null){
+          if (response == null) {
             standaredToast(msg: "Something went Wrong...");
-          }else{
+          } else {
             Print.p("Registration done");
+            var result=await localizeUserData(response["body"]);
+            if(result){
+              Get.offAll(SuccessPage(
+                  title: "Registration Completed",
+                  subtitle:
+                      "Registration details have been sent to admin. Please come back later.",
+                  onPress: () {
+                    Get.offAll(Approval_Screen());
+                  }));
+            }else{
+              standaredToast(msg: "exception in lcalize data");
+            }
             // Print.p("data=>${response.toString()}");
           }
 

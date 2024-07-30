@@ -6,7 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:tachnic_pharma_equipments/screens/login_register/login/controller.dart';
 
 import '../utility/constants.dart';
-// import 'package:onboarding_app/Screens/form/controller/controller.dart';
+// import 'package:onboarding_app/Screens/form/controller/user_controller.dart';
 // import 'package:onboarding_app/utility/constant.dart';
 
 class CustomTextFeield extends StatelessWidget {

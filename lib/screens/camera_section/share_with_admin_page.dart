@@ -1,9 +1,12 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:tachnic_pharma_equipments/api/api.dart';
 import 'package:tachnic_pharma_equipments/module/success_page/success_page.dart';
+import 'package:tachnic_pharma_equipments/screens/home/home_pages/home_page1/controller/user_controller.dart';
 import 'package:tachnic_pharma_equipments/utility/constants.dart';
 
 import '../../module/standaredButton/standaredButton.dart';
@@ -12,10 +15,10 @@ class ShareWithAdminPage extends StatelessWidget {
   String path;
   var context;
   ShareWithAdminPage({super.key, required this.path});
-
+  var conTitle = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    this.context=context;
+    this.context = context;
     return WillPopScope(
       onWillPop: onPop,
       child: Scaffold(
@@ -37,7 +40,7 @@ class ShareWithAdminPage extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       GestureDetector(
-                          onTap: (){
+                          onTap: () {
                             Get.back();
                             // standaredToast("Try again");
                           },
@@ -82,8 +85,44 @@ class ShareWithAdminPage extends StatelessWidget {
                     SizedBox(
                       height: 20,
                     ),
+                    // location title
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        "Location",
+                        style: GoogleFonts.poppins(
+                            fontWeight: FontWeight.w400,
+                            fontSize: 16,
+                            color: Color(0xFF747474)),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
                     // loocatin
-                    locationUi(add: "add", context: context)
+                    TextFormField(
+                      controller: conTitle,
+                      keyboardType: TextInputType.text,
+                      maxLength: 40,
+                      style: GoogleFonts.poppins(fontSize: 14),
+                      decoration: InputDecoration(
+                        filled: true, // Enables background color
+                        fillColor: Colors.grey.withOpacity(0.1),
+                        counterText: "",
+                        hintText: "Add Location Here",
+                        hintStyle: TextStyle(
+                            fontSize: 14, fontWeight: FontWeight.w500),
+
+                        enabledBorder: OutlineInputBorder(
+                            borderSide:
+                                BorderSide(color: Color(0xFFB9B9B9), width: 1),
+                            borderRadius: BorderRadius.circular(15)),
+                        focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                                color: Colors.black.withOpacity(0.5), width: 1),
+                            borderRadius: BorderRadius.circular(15)),
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -96,63 +135,20 @@ class ShareWithAdminPage extends StatelessWidget {
                   flex: 2,
                   child: Center(
                     child: StandaredButton(
-                        onPress: onShare,
-                        title: "Share with Admin"),
+                        onPress: onShare, title: "Share with Admin"),
                   ))
             ],
           ),
         ),
-
       ),
     );
   }
 
-  Widget locationUi({required String add, required BuildContext context}) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(vertical: 8),
-          child: Text(
-            "Location",
-            style: GoogleFonts.poppins(
-                fontWeight: FontWeight.w400,
-                fontSize: 16,
-                color: Color(0xFF747474)),
-          ),
-        ),
-        Container(
-          height: 60,
-          width: MediaQuery.of(context).size.width,
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(15),
-              border: Border.all(color: Color(0xFFB9B9B9)),
-              color: Color(0xFFF7F8F8)),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 14),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  add,
-                  style: GoogleFonts.poppins(
-                      fontSize: 18, fontWeight: FontWeight.w400),
-                ),
-              ],
-            ),
-          ),
-        )
-      ],
-    );
-  }
-  Future<bool> onPop() async{
+
+  Future<bool> onPop() async {
     Print.p("try to pop me");
     // Print.p(x.toString());
-    bool? shouldPop=await showDialog<bool>(
+    bool? shouldPop = await showDialog<bool>(
         context: context,
         builder: (context) {
           Print.p("in show dialog");
@@ -162,39 +158,83 @@ class ShareWithAdminPage extends StatelessWidget {
               firstButtonColor: Color(0xFFDDDDDD),
               secoundButtonColor: Color(0xFFED6366),
               onTapFirstButton: () {
-                Navigator.pop(context,false);                    },
-              onTapSecoundButton: () async{
-               Navigator.pop(context,true);
-               // Navigator.pop(context);
+                Navigator.pop(context, false);
+              },
+              onTapSecoundButton: () async {
+                Navigator.pop(context, true);
+                // Navigator.pop(context);
               },
               textFirstButton: "Cancel",
               textSecoundButton: "Discard");
         });
-    return  shouldPop ?? false;
+    return shouldPop ?? false;
   }
-  void onShare() {
-    showDialog(
-        context: context,
-        builder: (context) => standaredAlertBox(
-            title: "Share with Admin",
-            subTitle:
-            "Are you sure you want to continue?",
-            firstButtonColor: Color(0xFFDDDDDD),
-            secoundButtonColor: StandaredColor.secoundary,
-            onTapFirstButton: () {
-              Get.back();
-            },
-            onTapSecoundButton: () {
-              Get.back();
-              Get.off(SuccessPage(
-                  title: "Successful",
-                  subtitle:
+
+  void onShare() async {
+    Print.p((conTitle.text == "").toString());
+    if (conTitle.text != "") {
+      var result = await showDialog<bool>(
+          context: context,
+          builder: (context) => standaredAlertBox(
+              title: "Share with Admin",
+              subTitle: "Are you sure you want to continue?",
+              firstButtonColor: Color(0xFFDDDDDD),
+              secoundButtonColor: StandaredColor.secoundary,
+              onTapFirstButton: () {
+                Get.back(result: false);
+              },
+              onTapSecoundButton: onConfirmShare,
+              textFirstButton: "No",
+              textSecoundButton: "Yes"));
+      Print.p("result=>$result");
+
+      if (result!) {
+        var result = await callApi();
+        Print.p("reslut=>$result");
+        if (result) {
+          Print.p("in result");
+          await Get.find<UserDataController>().setHomePageData();
+          Get.off(SuccessPage(
+              title: "Successful",
+              subtitle:
                   "Your Location details have been Successfully Shared with the admin",
-                  onPress: () {
-                    Get.back();
-                  }));
-            },
-            textFirstButton: "No",
-            textSecoundButton: "Yes"));
+              onPress: () {
+                Get.back();
+              }));
+        }
+      } else {
+        Print.p("do nothing ");
+      }
+    } else {
+      standaredToast(msg: "Please fill Location");
+    }
+  }
+
+  //
+  void onConfirmShare() async {
+    Get.back(result: true);
+  }
+
+  Future<bool> callApi() async {
+    try {
+      Position currentLocation = await Geolocator.getCurrentPosition(
+          desiredAccuracy: LocationAccuracy.high);
+      var add = await Api.getHumanReadableAdd(
+          lat: currentLocation.latitude, log: currentLocation.longitude);
+
+      var result = await Api.postCurrentLocationImage(
+          imagePath: path,
+          title: conTitle.text,
+          address: add["body"]["address"].toString(),
+          userId:
+              Get.find<UserDataController>().userData.value["id"].toString());
+      if (result!["status"] == 200) {
+        return true;
+      }
+      return false;
+    } catch (e) {
+      Print.p("exception in callApi");
+      return false;
+    }
   }
 }

@@ -79,8 +79,8 @@ class EditNotePage extends StatelessWidget {
     );
   }
 
-  Map dateTimeInWords({DateTime? x}) {
-    Print.p("in my method");
+  static Map dateTimeInWords({DateTime? x}) {
+    // Print.p("in my method");
     final dateTime = x ??  DateTime.now();
     var month_names = [
       "January",
@@ -112,7 +112,7 @@ class EditNotePage extends StatelessWidget {
 
 
   }
-  String convertTo12HourFormat(String time24) {
+  static String convertTo12HourFormat(String time24) {
     // Split the input time into hours and minutes
     List<String> parts = time24.split(':');
     int hours = int.parse(parts[0]);

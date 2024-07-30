@@ -1,18 +1,33 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:tachnic_pharma_equipments/module/loading_shimmer/loading_shimmer.dart';
+import 'package:tachnic_pharma_equipments/screens/home/home_pages/home_page1/controller/user_controller.dart';
 import 'package:tachnic_pharma_equipments/screens/login_register/login/login_page.dart';
 import 'package:tachnic_pharma_equipments/utility/constants.dart';
+import 'package:tachnic_pharma_equipments/utility/wrap_over_hive.dart';
 
 import 'module/customTile.dart';
 
 class HomePage1 extends StatelessWidget {
   var context;
-  HomePage1();
+
+
+  HomePage1(){
+
+  }
+  var userDataController=Get.put(UserDataController());
+
+
+
 
   @override
   Widget build(BuildContext context) {
+
     this.context = context;
     return Scaffold(
       backgroundColor: Colors.white,
@@ -39,10 +54,11 @@ class HomePage1 extends StatelessWidget {
                       Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          Text(
-                            "Hello, Raju",
-                            style: GoogleFonts.poppins(
-                                fontWeight: FontWeight.w700, fontSize: 18),
+                          Obx(()=> Text(
+                              "Hello, ${userDataController.userData.value.isEmpty?"Loading...":userDataController.userData.value["fullname"]}",
+                              style: GoogleFonts.poppins(
+                                  fontWeight: FontWeight.w700, fontSize: 18),
+                            )
                           ),
                           Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 8),
@@ -61,7 +77,7 @@ class HomePage1 extends StatelessWidget {
                     ],
                   )),
                   GestureDetector(
-                    onTap: onTap,
+                    onTap: onLogout,
                     child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 10),
                       child: Icon(
@@ -74,7 +90,20 @@ class HomePage1 extends StatelessWidget {
               ),
             ),
             // main Section
-            Expanded(child: emptyDataUi()),
+            Expanded(child: Obx(()
+            {
+              try{
+
+
+                return userDataController.isLoading.value?LoadingShimmer():userDataController.homePageData.value.isEmpty
+                    ? emptyDataUi()
+                    : dataListUi();
+              }catch(e){
+                Print.p("Exception");
+                return emptyDataUi();
+
+              }
+            })),
           ],
         ),
       ),
@@ -106,13 +135,15 @@ class HomePage1 extends StatelessWidget {
     return ListView.builder(
       padding: EdgeInsets.zero,
       itemBuilder: (context, index) {
-        return CustomTile();
+        var data=userDataController.homePageData.value;
+        return CustomTile(address:data[index]["address"],imagePath: data[index]["image"],dateTime: data[index]["createdAt"],title: data[index]["title"],);
       },
-      itemCount: 5,
+      itemCount: userDataController.homePageData.value.length,
     );
   }
 
-  void onTap() {
+  void onLogout() async{
+
     showDialog(
         context: context,
         builder: (context) {
@@ -122,12 +153,21 @@ class HomePage1 extends StatelessWidget {
               firstButtonColor: Color(0xFFDDDDDD),
               secoundButtonColor: StandaredColor.secoundary,
               onTapFirstButton: () {
+
                 Get.back();
               },
-              onTapSecoundButton: () {
+              onTapSecoundButton: () async{
                 standaredToast(msg: "Logout");
+                var result=await logOut();
+                if(result){
+                  Print.p("before dispose");
+                  userDataController.dispose();
+                  Print.p("After dispose");
+                  Get.offAll(LoginPage());
+                }else{
+                  standaredToast(msg: "Something went wrong while logout");
+                }
 
-                Get.offAll(LoginPage());
               },
               textFirstButton: "No",
               textSecoundButton: "Yes");

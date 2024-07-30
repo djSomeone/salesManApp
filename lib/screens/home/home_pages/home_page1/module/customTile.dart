@@ -1,15 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:tachnic_pharma_equipments/screens/home/home_pages/home_page2/edit_note_page.dart';
+import 'package:tachnic_pharma_equipments/utility/constants.dart';
 
 class CustomTile extends StatelessWidget {
   String imagePath = "";
   String address = "";
-  String date = "";
-  String time;
-  CustomTile({this.imagePath = "", this.address = "", this.date = "",this.time=""});
+  dynamic dateTime = "";
+  String title;
+  CustomTile({this.imagePath = "", this.address = "", this.dateTime = "",this.title=""});
 
   @override
   Widget build(BuildContext context) {
+   dateTime=DateTime.parse(dateTime);
+   dateTime=EditNotePage.dateTimeInWords(x:dateTime);
     return Padding(
       padding: const EdgeInsets.only(bottom: 26),
       child: SizedBox(
@@ -25,8 +29,8 @@ class CustomTile extends StatelessWidget {
                   clipBehavior: Clip.hardEdge,
                   decoration:
                       BoxDecoration(borderRadius: BorderRadius.circular(16)),
-                  child: Image.asset(
-                    "assets/testImage.png",
+                  child: Image.network(
+                    imagePath,
                     fit: BoxFit.fill,
                   ),
                 )),
@@ -42,13 +46,13 @@ class CustomTile extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        "Vasai - Virar link road",
+                        title,
                         overflow: TextOverflow.ellipsis,
                         style: GoogleFonts.poppins(
                             fontSize: 16, fontWeight: FontWeight.w600),
                       ),
                       Text(
-                        "Vasai Station Rd, Vishal Nagar, Vasai Station Rd, Vishal Nagar, Maharashtra 401202",
+                        address,
                         maxLines: 3,
 
                         overflow: TextOverflow.ellipsis,
@@ -61,10 +65,10 @@ class CustomTile extends StatelessWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text("02:12 pm",style: GoogleFonts.poppins(fontSize: 16,fontWeight: FontWeight.w400),),
+                          Text(dateTime["time"],style: GoogleFonts.poppins(fontSize: 16,fontWeight: FontWeight.w400),),
                           Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 14),
-                            child: Text("12 August,2024 ",style: GoogleFonts.poppins(fontSize: 16,fontWeight: FontWeight.w400),),
+                            child: Text(dateTime["date"],style: GoogleFonts.poppins(fontSize: 16,fontWeight: FontWeight.w400),),
                           ),
                         ],
                       )
