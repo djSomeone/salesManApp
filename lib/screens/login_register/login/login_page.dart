@@ -84,7 +84,7 @@ class LoginPage extends StatelessWidget {
                                 ),
                                 placeHolder: "Password",
                                 controller: passCon,
-                                maxlength: 20,
+                                maxlength: 40,
                                 keyBoardType: TextInputType.visiblePassword,
                                 keyword: "password"),
                             SizedBox(

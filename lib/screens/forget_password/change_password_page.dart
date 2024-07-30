@@ -44,7 +44,7 @@ class ChangePasswordPage extends StatelessWidget {
                       controller: newPassCon,
                       keyboardType: TextInputType.visiblePassword,
                       style: GoogleFonts.poppins(fontSize: 14),
-                      maxLength: 20,
+                      maxLength: 40,
                       decoration: InputDecoration(
                         filled: true, // Enables background color
                         fillColor: Colors.grey.withOpacity(0.1),
@@ -72,7 +72,7 @@ class ChangePasswordPage extends StatelessWidget {
                     controller: conPassCon,
                     keyboardType: TextInputType.visiblePassword,
                     style: GoogleFonts.poppins(fontSize: 14),
-                    maxLength: 20,
+                    maxLength: 40,
                     decoration: InputDecoration(
                       filled: true, // Enables background color
                       fillColor: Colors.grey.withOpacity(0.1),
