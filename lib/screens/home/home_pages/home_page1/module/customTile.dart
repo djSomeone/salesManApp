@@ -13,6 +13,8 @@ class CustomTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
    dateTime=DateTime.parse(dateTime);
+   var duration=Duration(hours: 5,minutes: 31);
+   dateTime=dateTime.add(duration);
    dateTime=EditNotePage.dateTimeInWords(x:dateTime);
     return Padding(
       padding: const EdgeInsets.only(bottom: 26),

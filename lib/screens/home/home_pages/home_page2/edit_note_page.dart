@@ -27,11 +27,11 @@ class EditNotePage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             TextFormField(
-              onTap: () {},
-              onChanged: (x) {},
+
               controller: titleCon,
               keyboardType: TextInputType.visiblePassword,
               style: GoogleFonts.poppins(fontSize: 20, fontWeight: FontWeight.w500,),
+              maxLength: 40,
               decoration: InputDecoration(
                 contentPadding: EdgeInsets.zero,// Enables background color
 
