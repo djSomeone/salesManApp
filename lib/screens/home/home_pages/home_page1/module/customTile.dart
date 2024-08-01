@@ -1,3 +1,4 @@
+import 'package:fast_cached_network_image/fast_cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tachnic_pharma_equipments/screens/home/home_pages/home_page2/edit_note_page.dart';
@@ -31,10 +32,7 @@ class CustomTile extends StatelessWidget {
                   clipBehavior: Clip.hardEdge,
                   decoration:
                       BoxDecoration(borderRadius: BorderRadius.circular(16)),
-                  child: Image.network(
-                    imagePath,
-                    fit: BoxFit.fill,
-                  ),
+                  child: FastCachedImage(url: imagePath,),
                 )),
             SizedBox(
               width: 14,
@@ -67,10 +65,12 @@ class CustomTile extends StatelessWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(dateTime["time"],style: GoogleFonts.poppins(fontSize: 16,fontWeight: FontWeight.w400),),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 14),
-                            child: Text(dateTime["date"],style: GoogleFonts.poppins(fontSize: 16,fontWeight: FontWeight.w400),),
+                          Text(dateTime["time"],style: GoogleFonts.poppins(fontSize: 14,fontWeight: FontWeight.w400),),
+                          Expanded(
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 14),
+                              child: Text(dateTime["date"],style: GoogleFonts.poppins(fontSize: 14,fontWeight: FontWeight.w400),overflow: TextOverflow.ellipsis,),
+                            ),
                           ),
                         ],
                       )

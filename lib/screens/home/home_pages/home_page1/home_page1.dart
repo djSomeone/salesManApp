@@ -161,7 +161,7 @@ class HomePage1 extends StatelessWidget {
                 var result=await logOut();
                 if(result){
                   Print.p("before dispose");
-                  userDataController.dispose();
+                  Get.delete<UserDataController>();
                   Print.p("After dispose");
                   Get.offAll(LoginPage());
                 }else{

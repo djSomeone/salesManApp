@@ -1,14 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:tachnic_pharma_equipments/module/standaredButton/standaredButton.dart';
 import 'package:tachnic_pharma_equipments/utility/constants.dart';
 
 class EditNotePage extends StatelessWidget {
-  EditNotePage({super.key});
+  var title;
+  var content;
+  EditNotePage({this.title="",this.content=""});
   var titleCon=TextEditingController();
   var contentCon=TextEditingController();
+
   @override
   Widget build(BuildContext context) {
-
+    titleCon.text=title;
+    contentCon.text=content;
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -34,7 +39,7 @@ class EditNotePage extends StatelessWidget {
               maxLength: 40,
               decoration: InputDecoration(
                 contentPadding: EdgeInsets.zero,// Enables background color
-
+                counterText: "",
                 hintText: "Add Title",
                 hintStyle: TextStyle(fontSize: 20, fontWeight: FontWeight.w500,color: Color(0xFF747474)),
 
@@ -70,13 +75,18 @@ class EditNotePage extends StatelessWidget {
                         color: Colors.transparent, width: 1),
                     borderRadius: BorderRadius.circular(15)),
               ),
-            ),)
+            ),),
+            Padding(padding:EdgeInsets.symmetric(vertical: 20),child: StandaredButton(onPress: onSave, title: "Save",height: 50,))
            
 
           ],
         ),
       ),
     );
+  }
+
+  void onSave(){
+
   }
 
   static Map dateTimeInWords({DateTime? x}) {

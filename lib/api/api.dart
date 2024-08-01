@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:dio/dio.dart';
 
+
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 import 'package:tachnic_pharma_equipments/api/response_structure.dart';
 import 'package:tachnic_pharma_equipments/screens/home/home_pages/home_page1/controller/user_controller.dart';
@@ -17,9 +18,15 @@ class Api {
   static String fetchAllPostEndPoint = "user/get-salesman-by-id";
   static String updateLocationEndPoint = "user/update-location";
   static String postEndPoint = "user/salesman-add";
+  // forget password
   static String forgetPasswordEndPoint = "user/forgot-password";
   static String verifyCodeEndPoint = "user/verify-code";
   static String resetPassEndPoint = "user/reset-password";
+  // notes
+  static String createNotesEndPoint = "user/write-notes";
+  static String fetchAllNotesEndPoint = "user/get-notes-by-id";
+  static String editNoteEndPoint = "user/update-notes";
+  static String deleteNoteEndPoint = "user/delete-notes";
 
 
 
@@ -146,13 +153,14 @@ class Api {
 
 //   post you current location
   static Future<Map<String, dynamic>?> postCurrentLocationImage(
-      {required String imagePath,required String title,required String address,required String userId}) async {
+      {required String imagePath,required String title,required double lat,required double log,required String userId}) async {
     Print.p("userid=>${userId}");
     try {
       var finalPath;
       finalPath = "$endPoint$postEndPoint";
       var formData= FormData.fromMap({
-        "address":address,
+        "lat":lat,
+        "lng":log,
         "userId":userId,
         "image":await MultipartFile.fromFile(imagePath),
         "title":title
@@ -247,6 +255,95 @@ class Api {
       // Print.p("Some thing went wrong in login");
       Print.p("in resetPass Exception:${e.toString()}");
       standaredToast(msg: "Something went wrong...");
+    }
+  }
+
+//   create note api user/write-notes
+
+  static Future<Map<String, dynamic>?> createNote(
+      {required String title,required String content,required String userId}) async {
+    // Print.p("in Login api ");
+    try {
+      var finalPath;
+      finalPath = "$endPoint$createNotesEndPoint";
+      var data={
+        "userId": userId,
+        "title": title,
+        "content": content
+      };
+      Response res = await dio.post(finalPath,data: data);
+      return ResponseStructure.toResponseStructure(res);
+      // await Future.delayed(Duration(seconds: 3),(){
+      //   Print.p("After 3secound call back function");
+      // });
+    } catch (e) {
+      // Print.p("Some thing went wrong in login");
+      Print.p("in create note Exception:${e.toString()}");
+      standaredToast(msg: "Something went wrong while creating Note...");
+    }
+  }
+
+//   get all notes
+
+  static Future<Map<String, dynamic>?> fetchAllNotes(
+      {required String userId}) async {
+    // Print.p("in Login api ");
+    try {
+      var finalPath;
+      finalPath = "$endPoint$fetchAllNotesEndPoint";
+      Response res = await dio.get("${finalPath}?userId=${userId}",);
+      return ResponseStructure.toResponseStructure(res);
+      // await Future.delayed(Duration(seconds: 3),(){
+      //   Print.p("After 3secound call back function");
+      // });
+    } catch (e) {
+      // Print.p("Some thing went wrong in login");
+      Print.p("in fetch all notes Exception:${e.toString()}");
+      standaredToast(msg: "Something went wrong while fetching notes...");
+    }
+  }
+
+//   update notes
+
+  static Future<Map<String, dynamic>?> editNote(
+      {required String title,required String content,required String userId}) async {
+    // Print.p("in Login api ");
+    try {
+      var finalPath;
+      finalPath = "$endPoint$editNoteEndPoint";
+      var data={
+        "title": title,
+        "content": content
+      };
+      Response res = await dio.post("${finalPath}?id=${userId}",data: data);
+      return ResponseStructure.toResponseStructure(res);
+      // await Future.delayed(Duration(seconds: 3),(){
+      //   Print.p("After 3secound call back function");
+      // });
+    } catch (e) {
+      // Print.p("Some thing went wrong in login");
+      Print.p("in edit note Exception:${e.toString()}");
+      standaredToast(msg: "Something went wrong while editing Note...");
+    }
+  }
+
+//   delete note
+
+  static Future<Map<String, dynamic>?> deleteNote(
+      {required String noteId}) async {
+    // Print.p("in Login api ");
+    try {
+      var finalPath;
+      finalPath = "$endPoint$deleteNoteEndPoint";
+      Response res = await dio.delete("${finalPath}?id=${noteId}",);
+      return ResponseStructure.toResponseStructure(res);
+      // await Future.delayed(Duration(seconds: 3),(){
+      //   Print.p("After 3secound call back function");
+      // });
+    } catch (e) {
+      // Print.p("Some thing went wrong in login");
+      Print.p("in delete notes Exception:${e.toString()}");
+      standaredToast(msg: "Something went wrong while delete notes...");
     }
   }
 

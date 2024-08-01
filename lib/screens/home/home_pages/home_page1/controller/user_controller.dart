@@ -25,6 +25,7 @@ class UserDataController  extends GetxController{
     // TODO: implement onClose
     super.onClose();
     Print.p("closed the usercntroller");
+    _positionSubscription.cancel();
   }
   void setIsLoading(bool newValue)
   {
@@ -53,7 +54,7 @@ class UserDataController  extends GetxController{
       var userDataController = Get.find<UserDataController>();
       Print.p(userDataController.userData.value.toString());
       var result =
-          await Api.fetchAllPosts(id: userDataController.userData.value["id"]);
+          await Api.fetchAllPosts(id: userDataController.userData.value["_id"]);
       if (result != null) {
         homePageData.value = result["body"];
       } else {
@@ -82,15 +83,16 @@ class UserDataController  extends GetxController{
           Print.p("userdata");
           Print.p(userData.value.toString());
           Api.updateLocation(
-              id: userData.value["id"],
+              id: userData.value["_id"],
               lat: newPosition.latitude,
               log: newPosition.longitude);
         }, onError: (error) {
           Print.p("Error getting location: $error");
         });
       }
+
     }catch(x){
-        Print.p("");
+        Print.p("in initTracking=.${x.toString()}");
       }
   }
 
@@ -99,6 +101,7 @@ class UserDataController  extends GetxController{
 
     var status=await Permission.location.status;
  while(status.isDenied){
+   Print.p("in requestLocationParmission");
    status = await Permission.location.request();
  }
     if (status.isGranted) {

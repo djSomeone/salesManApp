@@ -6,14 +6,14 @@ class WrapOverHive{
   async{
 
     var box=await initUser();
-    var data=await box.get(key);
+    var data=await box["user"].get(key);
     return data;
   }
   static Future<bool> setUserData(String key,Map<dynamic,dynamic> data)
   async{
     try{
       var box=await initUser();
-      await box.put(key, data);
+      await box["user"].put(key, data);
       return true;
     }
     catch(e)
@@ -22,10 +22,13 @@ class WrapOverHive{
       return false;
     }
   }
-  static Future<Box> initUser()async{
+
+  static Future<Map<String,dynamic>> initUser()async{
     await Hive.openBox<Map<dynamic, dynamic>>("User");
     var box=Hive.box<Map<dynamic, dynamic>>("User");
-    return box;
+    await Hive.openBox<Map<dynamic, dynamic>>("Note");
+    var note=Hive.box<Map<dynamic, dynamic>>("Note");
+    return {"user":box,"nots":note};
   }
 
   static Future<bool> clearUserData()
@@ -33,7 +36,7 @@ class WrapOverHive{
   {
    try {
       var box = await initUser();
-      await box.clear();
+      await box["user"].clear();
       return true;
     }
     catch(e){

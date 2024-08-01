@@ -1,4 +1,5 @@
 
+import 'package:fast_cached_network_image/fast_cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -40,6 +41,7 @@ void main() async{
     maxWidth: 90,
   )
   );
+  await FastCachedImageConfig.init(clearCacheAfter: const Duration(hours: 1));
 
  runApp(const MyApp());
 }

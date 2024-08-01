@@ -219,15 +219,15 @@ class ShareWithAdminPage extends StatelessWidget {
     try {
       Position currentLocation = await Geolocator.getCurrentPosition(
           desiredAccuracy: LocationAccuracy.high);
-      var add = await Api.getHumanReadableAdd(
-          lat: currentLocation.latitude, log: currentLocation.longitude);
+
 
       var result = await Api.postCurrentLocationImage(
           imagePath: path,
           title: conTitle.text,
-          address: add["body"]["address"].toString(),
+          lat: currentLocation.latitude,
+          log: currentLocation.longitude,
           userId:
-              Get.find<UserDataController>().userData.value["id"].toString());
+              Get.find<UserDataController>().userData.value["_id"].toString());
       if (result!["status"] == 200) {
         return true;
       }
