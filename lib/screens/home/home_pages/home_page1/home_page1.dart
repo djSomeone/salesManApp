@@ -22,7 +22,7 @@ class HomePage1 extends StatelessWidget {
 
   }
   var userDataController=Get.put(UserDataController());
-  var notesController=Get.put(NotesController());
+
 
 
 

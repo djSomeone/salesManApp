@@ -10,7 +10,7 @@ class NotePage extends StatelessWidget {
   NotePage({super.key});
 
   var conPassCon = TextEditingController();
-  var noteCon=Get.find<NotesController>();
+  var noteCon=Get.put(NotesController());
   @override
   Widget build(BuildContext context) {
     // Print.p(DateTime.now().toString());
