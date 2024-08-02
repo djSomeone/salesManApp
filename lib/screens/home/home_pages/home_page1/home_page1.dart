@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tachnic_pharma_equipments/module/loading_shimmer/loading_shimmer.dart';
 import 'package:tachnic_pharma_equipments/screens/home/home_pages/home_page1/controller/user_controller.dart';
+import 'package:tachnic_pharma_equipments/screens/home/home_pages/home_page2/controller/notesController.dart';
 import 'package:tachnic_pharma_equipments/screens/login_register/login/login_page.dart';
 import 'package:tachnic_pharma_equipments/utility/constants.dart';
 import 'package:tachnic_pharma_equipments/utility/wrap_over_hive.dart';
@@ -21,6 +22,8 @@ class HomePage1 extends StatelessWidget {
 
   }
   var userDataController=Get.put(UserDataController());
+  var notesController=Get.put(NotesController());
+
 
 
 

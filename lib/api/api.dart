@@ -306,7 +306,7 @@ class Api {
 //   update notes
 
   static Future<Map<String, dynamic>?> editNote(
-      {required String title,required String content,required String userId}) async {
+      {required String title,required String content,required String noteId}) async {
     // Print.p("in Login api ");
     try {
       var finalPath;
@@ -315,7 +315,7 @@ class Api {
         "title": title,
         "content": content
       };
-      Response res = await dio.post("${finalPath}?id=${userId}",data: data);
+      Response res = await dio.post("${finalPath}?id=${noteId}",data: data);
       return ResponseStructure.toResponseStructure(res);
       // await Future.delayed(Duration(seconds: 3),(){
       //   Print.p("After 3secound call back function");

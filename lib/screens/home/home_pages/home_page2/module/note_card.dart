@@ -6,19 +6,25 @@ import 'package:tachnic_pharma_equipments/utility/constants.dart';
 
 class NoteCard extends StatelessWidget {
   var title;
-  var date;
+  // var date;
   var note;
-  var time;
-   NoteCard({required this.title,required this.time,required this.date,required this.note});
+  var id;
+  // var time;
+  dynamic dateTime = "";
+
+   NoteCard({required this.title,required this.dateTime,required this.note,required this.id});
 
   @override
   Widget build(BuildContext context) {
-
+    dateTime=DateTime.parse(dateTime);
+    var duration=Duration(hours: 5,minutes: 31);
+    dateTime=dateTime.add(duration);
+    dateTime=EditNotePage.dateTimeInWords(x:dateTime);
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 10),
       child: GestureDetector(
         onTap: (){
-          Get.to(EditNotePage(title: title,content: note,));
+          Get.to(EditNotePage(title: title,content: note,id: id,));
         },
         child: Container(
           // height: 220,
@@ -34,13 +40,13 @@ class NoteCard extends StatelessWidget {
                 // title and date and time
                 Row(
                   children: [
-                    Expanded(flex:5,child:Text(title,overflow:TextOverflow.ellipsis,style: GoogleFonts.poppins(color:Colors.white,fontWeight: FontWeight.w600,fontSize: 16),)),
+                    Expanded(child:Text(title,overflow:TextOverflow.ellipsis,style: GoogleFonts.poppins(color:Colors.white,fontWeight: FontWeight.w600,fontSize: 16),)),
 
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 10),
-                      child: Text(date,style: GoogleFonts.poppins(color: Color(0xFFD9D9D9),fontSize: 14),),
+                      child: Text(dateTime["date"],style: GoogleFonts.poppins(color: Color(0xFFD9D9D9),fontSize: 14),),
                     ),
-                    Expanded(flex:2,child: Text(time,style: GoogleFonts.poppins(color: Color(0xFFD9D9D9)),)),
+                    Text(dateTime["time"],style: GoogleFonts.poppins(color: Color(0xFFD9D9D9)),),
                   ],
                 ),
                 // spacee

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:tachnic_pharma_equipments/screens/home/home_pages/home_page2/controller/notesController.dart';
 import 'package:tachnic_pharma_equipments/screens/home/home_pages/home_page2/edit_note_page.dart';
 import 'package:tachnic_pharma_equipments/screens/home/home_pages/home_page2/module/note_card.dart';
 import 'package:tachnic_pharma_equipments/utility/constants.dart';
@@ -9,6 +10,7 @@ class NotePage extends StatelessWidget {
   NotePage({super.key});
 
   var conPassCon = TextEditingController();
+  var noteCon=Get.find<NotesController>();
   @override
   Widget build(BuildContext context) {
     // Print.p(DateTime.now().toString());
@@ -40,14 +42,7 @@ class NotePage extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(vertical: 10),
                   child: addNoteButton(),
                 ),
-                Expanded(child: ListView(
-                  padding: EdgeInsets.zero,
-                  children: [
-                    NoteCard(title: "SoftCraft Meetup",date: "17 August, 24",time: "12:07 am",note: "A productive meeting was held between ",),
-                    NoteCard(title: "SoftCraft Meetup",date: "17 August, 24",time: "12:07 am",note: "A productive meeting was held between A productive meeting was held between SoftCraft Solutions and the sales agent. Key strategies for market expansion and collaboration were discussed, with actionable insights and mutual goals.",),
-
-                  ],
-                )),
+                Expanded(child: listNotes()),
               ],
             ))
           ],
@@ -55,7 +50,27 @@ class NotePage extends StatelessWidget {
       ),
     );
   }
+  // lsting the  getted notes
+  Widget listNotes(){
 
+    return Obx(
+      ()
+      {
+        var notesData=Get.find<NotesController>().filtered.value;
+       return ListView.builder(
+          itemBuilder: (context, index) {
+            return NoteCard(
+                id: notesData[index]["_id"],
+                title: notesData[index]["title"],
+                dateTime: notesData[index]["updatedAt"],
+                note: notesData[index]["content"]);
+          },
+          itemCount: notesData.length,
+          padding: EdgeInsets.zero,
+        );
+      },
+    );
+  }
   Widget topBar() {
     return Row(
       children: [
@@ -65,7 +80,10 @@ class NotePage extends StatelessWidget {
             padding: const EdgeInsets.symmetric(vertical: 10),
             child: TextFormField(
               onTap: () {},
-              onChanged: (x) {},
+              onChanged: (x) {
+                Print.p("in onchange()");
+                noteCon.filterData(x);
+              },
               controller: conPassCon,
               keyboardType: TextInputType.visiblePassword,
               style: GoogleFonts.poppins(fontSize: 14),
@@ -88,52 +106,15 @@ class NotePage extends StatelessWidget {
             ),
           ),
         ),
-        // space
-        SizedBox(
-          width: 12,
-        ),
-        // sort by
-        Container(
-          height: 52,
-          // width: 90,
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(14),
-              // color: Color(0xFFDFDFDF).withOpacity(0.4),
-              border: Border.all(color: Color(0xFFB4B4B4))),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-            child: Center(
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Icon(
-                    Icons.keyboard_arrow_down,
-                    color: Color(0xFF747474),
-                  ),
-                  SizedBox(
-                    width: 8,
-                  ),
-                  Text(
-                    "Sort by",
-                    style: GoogleFonts.poppins(
-                        color: Color(0xFF747474),
-                        fontWeight: FontWeight.w400,
-                        fontSize: 14),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        )
+
+
       ],
     );
   }
   Widget addNoteButton(){
     return GestureDetector(
       onTap: (){
-        Get.to(EditNotePage());
+        Get.to(EditNotePage(isEditNote: false,));
       },
       child: SizedBox(
         height:54,

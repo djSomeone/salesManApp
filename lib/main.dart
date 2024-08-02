@@ -19,15 +19,16 @@ import 'module/standaredButton/standaredButton.dart';
 // this is for the initial cheeckes
 bool isUserAlreadyLogin=false;
 bool isApproved=false;
+var userData;
 void main() async{
 
   WidgetsFlutterBinding.ensureInitialized();
 
   await Hive.initFlutter();
-  var result=await WrapOverHive.getUserData("userData");
-  if(result!=null){
+   userData=await WrapOverHive.getUserData("userData");
+  if(userData!=null){
     isUserAlreadyLogin=true;
-    if(result["isAdminApproved"]){
+    if(userData["isAdminApproved"]){
       isApproved=true;
     }
   }

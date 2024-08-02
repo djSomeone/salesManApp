@@ -4,6 +4,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:tachnic_pharma_equipments/api/api.dart';
+import 'package:tachnic_pharma_equipments/screens/home/home_pages/home_page2/controller/notesController.dart';
 import 'package:tachnic_pharma_equipments/utility/constants.dart';
 import 'package:tachnic_pharma_equipments/utility/wrap_over_hive.dart';
 
@@ -37,9 +38,12 @@ class UserDataController  extends GetxController{
   Future<void> setUserData()async{
     var result=await WrapOverHive.getUserData("userData");
     initializeTracking();
+
     if(result!=null){
       userData.value = result;
       await setHomePageData();
+      // becuse we need user data and then i call  noteController
+
     }
     else{
       Print.p("Exception:setUserData()");
